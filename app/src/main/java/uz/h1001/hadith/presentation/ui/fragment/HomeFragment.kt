@@ -1,28 +1,35 @@
-package uz.h1001.hadith.ui.fragment
+package uz.h1001.hadith.presentation.ui.fragment
 
 import android.app.SearchManager
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.ListAdapter
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import uz.h1001.hadith.R
+import uz.h1001.hadith.core.Constants
 import uz.h1001.hadith.databinding.FragmentHomeBinding
-import uz.h1001.hadith.model.Hadith
-import uz.h1001.hadith.ui.adapter.HomeAdapter
-import uz.h1001.hadith.util.setUpAdapter
+import uz.h1001.hadith.domain.model.Hadith
+import uz.h1001.hadith.domain.model.Response
+import uz.h1001.hadith.presentation.ui.adapter.HomeAdapter
+import uz.h1001.hadith.presentation.util.setUpAdapter
+import uz.h1001.hadith.presentation.viewmodel.HadithsViewModel
 
-
+@AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextListener {
 
     private val binding: FragmentHomeBinding by viewBinding(FragmentHomeBinding::bind)
     private lateinit var searchView: SearchView
     private var adapter: HomeAdapter = HomeAdapter()
+    private val hadithsViewModel:HadithsViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -36,15 +43,24 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         toggle.syncState()
         setHasOptionsMenu(true)
         binding.appBarHome.contentHome.rvMainChapters.setUpAdapter(adapter,LinearLayoutManager(requireContext()))
-        subscribeHomeContent()
+        subscribeHomeContent(hadithsViewModel.hadithsLiveData)
     }
 
-    private fun subscribeHomeContent() {
-        adapter.submitList(ArrayList<Hadith>().apply {
-            for (i in 0..10){
-                add(element = Hadith(number = i, title = "Title $i","Description"))
+    private fun subscribeHomeContent(hadithsLiveData: LiveData<Response<List<Hadith>>>) {
+        hadithsLiveData.observe(viewLifecycleOwner){
+            when(it){
+                is Response.Loading -> {
+                    Snackbar.make(binding.root,"Loading",Snackbar.LENGTH_LONG).show()
+                }
+                is Response.Error -> {
+                    Snackbar.make(binding.root,"Error ${it.message}",Snackbar.LENGTH_LONG).show()
+                    Log.d(Constants.TAG, "subscribeHomeContent: ${it.message}")
+                }
+                is Response.Success -> {
+                    adapter.submitList(it.data)
+                }
             }
-        })
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "782811673624",
+    "project_id": "hadith-8f1eb",
+    "storage_bucket": "hadith-8f1eb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:782811673624:android:a1bee464f339c032f67f6d",
+        "android_client_info": {
+          "package_name": "uz.h1001.hadith"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "782811673624-8bg6utftupkebga5pr1b8laoi68uet5h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8M9RYWYkyIiaN4R9RYIPqKxxDtpxrPXA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "782811673624-8bg6utftupkebga5pr1b8laoi68uet5h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

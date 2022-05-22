@@ -1,4 +1,4 @@
-package uz.h1001.hadith.ui.fragment
+package uz.h1001.hadith.presentation.ui.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

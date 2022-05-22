@@ -2,6 +2,9 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id("androidx.navigation.safeargs.kotlin")
+    id("com.google.gms.google-services")
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -52,6 +55,15 @@ dependencies {
 
     //Property delegate
     implementation 'com.github.kirich1409:viewbindingpropertydelegate:1.5.3'
-    // To use only without reflection variants of viewBinding
     implementation 'com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.5.3'
+
+    //Firebase
+    implementation platform('com.google.firebase:firebase-bom:30.0.1')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation "com.google.firebase:firebase-firestore-ktx"
+
+    //Dagger-Hilt
+    implementation "com.google.dagger:hilt-android:2.38.1"
+    kapt "com.google.dagger:hilt-compiler:2.38.1"
+    implementation("androidx.fragment:fragment-ktx:1.4.1")
 }

@@ -1,7 +1,6 @@
-package uz.h1001.hadith.util
+package uz.h1001.hadith.presentation.util
 
 import androidx.recyclerview.widget.RecyclerView
-import uz.h1001.hadith.ui.adapter.HomeAdapter
 
 fun RecyclerView.setUpAdapter(rvAdapter: Any, rvLayoutManager: RecyclerView.LayoutManager) {
     this.apply {

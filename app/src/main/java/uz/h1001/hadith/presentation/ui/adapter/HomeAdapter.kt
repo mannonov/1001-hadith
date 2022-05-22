@@ -1,4 +1,4 @@
-package uz.h1001.hadith.ui.adapter
+package uz.h1001.hadith.presentation.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import uz.h1001.hadith.databinding.ItemChapterBinding
-import uz.h1001.hadith.model.Hadith
+import uz.h1001.hadith.domain.model.Hadith
 
 class HomeAdapter : ListAdapter<Hadith, HomeAdapter.ViewHolder>(ItemComparator()) {
 
