@@ -26,4 +26,18 @@ class HadithRepositoryImpl @Inject constructor(private val hadithReference: Coll
             snapshotListener.remove()
         }
     }
+
+    override fun searchHadithsFromFireStore(query: String): Flow<Response<List<Hadith>>> = callbackFlow {
+        val snapshotListener = hadithReference.whereEqualTo(Constants.TITLE,query).addSnapshotListener{snapshot,e->
+            val response = if(snapshot != null){
+                Response.Success(snapshot.toObjects(Hadith::class.java))
+            }else{
+                Response.Error(e?.message ?: e.toString())
+            }
+            trySend(response).isSuccess
+        }
+        awaitClose {
+            snapshotListener.remove()
+        }
+    }
 }

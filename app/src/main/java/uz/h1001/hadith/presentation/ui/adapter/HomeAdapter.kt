@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import uz.h1001.hadith.databinding.ItemChapterBinding
 import uz.h1001.hadith.domain.model.Hadith
 
-class HomeAdapter : ListAdapter<Hadith, HomeAdapter.ViewHolder>(ItemComparator()) {
+class HomeAdapter() : ListAdapter<Hadith, HomeAdapter.ViewHolder>(ItemComparator()) {
+
+    private lateinit var itemClickListener: ItemClickListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemChapterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -19,14 +21,24 @@ class HomeAdapter : ListAdapter<Hadith, HomeAdapter.ViewHolder>(ItemComparator()
         holder.bind(getItem(position))
     }
 
-    class ViewHolder(private val binding: ItemChapterBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind(item:Hadith){
+    inner class ViewHolder(private val binding: ItemChapterBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: Hadith) {
             binding.apply {
-                tvChapterNumber.text = "${item.number} hadis"
+                tvChapterNumber.text = "${item.number} - hadis"
                 tvChapterTitle.text = item.title
+            }
+            binding.root.setOnClickListener {
+                itemClickListener.onClick(item)
             }
         }
     }
+
+    fun setItemClickListener(itemClickListener: ItemClickListener){
+        this.itemClickListener = itemClickListener
+    }
+
+    class ItemClickListener(val onClick: (hadith: Hadith) -> Unit)
 
     class ItemComparator : DiffUtil.ItemCallback<Hadith>() {
 

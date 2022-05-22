@@ -12,6 +12,8 @@ import uz.h1001.hadith.core.Constants
 import uz.h1001.hadith.data.repository.HadithRepositoryImpl
 import uz.h1001.hadith.domain.repositoy.HadithRepository
 import uz.h1001.hadith.domain.use_case.GetHadiths
+import uz.h1001.hadith.domain.use_case.SearchHadiths
+import uz.h1001.hadith.domain.use_case.UseCases
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -21,14 +23,18 @@ object AppModule {
     fun provideFirebaseFirestore() = Firebase.firestore
 
     @Provides
-    fun getHadithsRef(
-        db:FirebaseFirestore
+    fun provideHadithsRef(
+        db: FirebaseFirestore
     ) = db.collection(Constants.HADITHS)
 
     @Provides
-    fun getHadithsUseCase(repository: HadithRepository) = GetHadiths(repository = repository)
+    fun provideUseCases(repository: HadithRepository) = UseCases(
+        getHadiths = GetHadiths(repository = repository),
+        searchHadiths = SearchHadiths(repository = repository)
+    )
 
     @Provides
-    fun getHadithsRepository(hadithsRef:CollectionReference) : HadithRepository = HadithRepositoryImpl(hadithReference = hadithsRef)
+    fun provideHadithsRepository(hadithsRef: CollectionReference): HadithRepository =
+        HadithRepositoryImpl(hadithReference = hadithsRef)
 
 }

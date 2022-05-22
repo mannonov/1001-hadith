@@ -18,5 +18,9 @@
         android:id="@+id/detailFragment"
         android:name="uz.h1001.hadith.presentation.ui.fragment.DetailFragment"
         android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail" />
+        tools:layout="@layout/fragment_detail" >
+        <argument
+            android:name="hadith"
+            app:argType="uz.h1001.hadith.domain.model.HadithNavigation" />
+    </fragment>
 </navigation>
