@@ -1,7 +1,8 @@
-package uz.h1001.hadith
+package uz.h1001.hadith.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import uz.h1001.hadith.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
