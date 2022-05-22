@@ -2,4 +2,13 @@
     <string name="app_name">1001 hadith</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="search">Search</string>
+    <string name="menu_tools">Sozlamalar</string>
+    <string name="menu_night_mode">Tungi rejimi</string>
+    <string name="menu_additionally">Qo\'shimcha</string>
+    <string name="menu_about_us">Biz haqimizda</string>
+    <string name="menu_rate">Baxolash</string>
+    <string name="menu_share">Ulashish</string>
+    <string name="navigation_drawer_open">Open</string>
+    <string name="navigation_drawer_close">Close</string>
 </resources>
