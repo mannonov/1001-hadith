@@ -6,8 +6,10 @@ import kotlinx.coroutines.flow.Flow
 
 interface HadithRepository {
 
-    fun getHadithsFromFireStore(): Flow<Response<List<Hadith>>>
+    suspend fun getHadithsFromFireStore(): Flow<Response<List<Hadith>>>
 
-    fun searchHadithsFromFireStore(query: String): Flow<Response<List<Hadith>>>
+    suspend fun searchHadithsFromFireStore(query: String): Flow<Response<List<Hadith>>>
+
+    fun getDatabaseVersionFromRemoteConfig() : Long
 
 }
