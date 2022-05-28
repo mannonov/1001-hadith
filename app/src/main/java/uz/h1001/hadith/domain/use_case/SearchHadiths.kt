@@ -5,5 +5,5 @@ import uz.h1001.hadith.domain.repositoy.HadithRepository
 class SearchHadiths(
     private val repository: HadithRepository
 ) {
-    operator fun invoke(query: String) = repository.searchHadithsFromFireStore(query = query)
+    suspend operator fun invoke(query: String) = repository.searchHadithsFromDatabase(query = query)
 }

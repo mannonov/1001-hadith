@@ -8,8 +8,8 @@ interface HadithRepository {
 
     suspend fun getHadithsFromFireStore(): Flow<Response<List<Hadith>>>
 
-    suspend fun searchHadithsFromFireStore(query: String): Flow<Response<List<Hadith>>>
+    suspend fun searchHadithsFromDatabase(query: String): Flow<Response<List<Hadith>>>
 
-    fun getDatabaseVersionFromRemoteConfig() : Long
+    fun getDatabaseVersionFromRemoteConfig(): Long
 
 }

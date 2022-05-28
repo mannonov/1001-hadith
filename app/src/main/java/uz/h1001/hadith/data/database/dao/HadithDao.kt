@@ -11,12 +11,12 @@ import uz.h1001.hadith.data.database.entitiy.HadithModelDatabase
 interface HadithDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertHadiths(list: List<HadithModelDatabase>)
+    suspend fun insertHadiths(list: List<HadithModelDatabase>)
 
     @Query("SELECT * FROM hadith_table")
-    fun getHadiths(): List<HadithModelDatabase>
+    suspend fun getHadiths(): List<HadithModelDatabase>
 
     @Query("SELECT * FROM hadith_table WHERE number LIKE :query OR title LIKE :query")
-    fun searchHadithFromDatabase(query: String): List<HadithDatabase>
+    suspend fun searchHadithFromDatabase(query: String): List<HadithModelDatabase>
 
 }

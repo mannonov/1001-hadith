@@ -6,8 +6,11 @@ import androidx.datastore.preferences.core.edit
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import uz.h1001.hadith.core.Constants
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class HadithDataStore(private val dataStore: DataStore<Preferences>) {
+@Singleton
+class HadithDataStore @Inject constructor(private val dataStore: DataStore<Preferences>) {
 
     suspend fun saveLocalDatabaseVersion(newVersion: Long) {
         dataStore.edit {

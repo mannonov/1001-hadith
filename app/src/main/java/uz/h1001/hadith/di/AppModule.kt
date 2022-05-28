@@ -1,6 +1,7 @@
 package uz.h1001.hadith.di
 
 import android.content.Context
+import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
 import androidx.datastore.preferences.SharedPreferencesMigration
@@ -37,11 +38,9 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-    @Singleton
     @Provides
     fun provideFirebaseFirestore() = Firebase.firestore
 
-    @Singleton
     @Provides
     fun provideRemoteConfig(): FirebaseRemoteConfig {
         val remoteConfig = FirebaseRemoteConfig.getInstance()
@@ -49,16 +48,18 @@ object AppModule {
             .setMinimumFetchIntervalInSeconds(0)
             .build()
         remoteConfig.setConfigSettingsAsync(configSettings)
+        remoteConfig.fetchAndActivate().addOnCompleteListener {
+            Log.d(Constants.TAG, "provideRemoteConfig: init")
+        }
         return remoteConfig
     }
 
-    @Singleton
     @Provides
     fun provideHadithsRef(
         db: FirebaseFirestore
     ) = db.collection(Constants.HADITHS)
 
-    @Singleton
+
     @Provides
     fun providePreferencesDataStore(@ApplicationContext appContext: Context): DataStore<Preferences> {
         return PreferenceDataStoreFactory.create(
@@ -71,17 +72,14 @@ object AppModule {
         )
     }
 
-    @Singleton
     @Provides
     fun provideDatabase(@ApplicationContext appContext: Context) : HadithDatabase{
         return HadithDatabase.getInstance(appContext)
     }
 
-    @Singleton
     @Provides
     fun provideHadithMapper() : SingleMapper<Hadith,HadithModelDatabase> = HadithMapper()
 
-    @Singleton
     @Provides
     fun provideUseCases(repository: HadithRepository) = UseCases(
         getHadiths = GetHadiths(repository = repository),
@@ -89,21 +87,16 @@ object AppModule {
         getDatabaseVersion = GetDatabaseVersion(repository = repository)
     )
 
-    @Singleton
     @Provides
     fun provideHadithsRepository(
         hadithsRef: CollectionReference,
         remoteConfig: FirebaseRemoteConfig,
-        dataStore: DataStore<Preferences>,
-        database:HadithDatabase,
-        mapper: SingleMapper<Hadith,HadithModelDatabase>
+        database:HadithDatabase
     ): HadithRepository =
         HadithRepositoryImpl(
             hadithReference = hadithsRef,
             remoteConfig = remoteConfig,
-            hadithDataStore = HadithDataStore(dataStore),
-            database = database,
-            mapper = mapper
+            database = database
         )
 
 }
