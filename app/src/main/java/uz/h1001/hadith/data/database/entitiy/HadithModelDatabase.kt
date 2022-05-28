@@ -5,9 +5,9 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "hadith_table")
 data class HadithModelDatabase(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
-    val number: Int = 0,
+    @PrimaryKey
+    val id: String,
+    val number: String? = "number",
     val title: String? = "title",
     val description: String? = "description"
 )

@@ -2,21 +2,22 @@ package uz.h1001.hadith.domain.model
 
 import android.os.Parcel
 import android.os.Parcelable
+import java.util.stream.IntStream
 
 data class HadithNavigation(
-    val number:Int,
+    val number: String?,
     val title: String?,
     val description: String?
-):Parcelable {
+) : Parcelable {
     constructor(parcel: Parcel) : this(
-        parcel.readInt(),
+        parcel.readString(),
         parcel.readString(),
         parcel.readString()
     ) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeInt(number)
+        parcel.writeString(number)
         parcel.writeString(title)
         parcel.writeString(description)
     }

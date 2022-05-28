@@ -63,7 +63,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         searchHadithsLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is Response.Loading -> {
-                    Snackbar.make(binding.root, "Loading", Snackbar.LENGTH_LONG).show()
+
                 }
                 is Response.Error -> {
                     Snackbar.make(binding.root, "Error ${it.message}", Snackbar.LENGTH_LONG).show()
@@ -85,7 +85,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
 
     private fun mapHadithToHadithNavigation(hadith: Hadith): HadithNavigation {
         return HadithNavigation(
-            number = hadith.number ?: 0,
+            number = hadith.number,
             title = hadith.title,
             description = hadith.description
         )
@@ -95,11 +95,10 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         hadithsLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is Response.Loading -> {
-                    Snackbar.make(binding.root, "Loading", Snackbar.LENGTH_LONG).show()
+
                 }
                 is Response.Error -> {
                     Snackbar.make(binding.root, "Error ${it.message}", Snackbar.LENGTH_LONG).show()
-                    Log.d(Constants.TAG, "subscribeHomeContent: ${it.message}")
                 }
                 is Response.Success -> {
                     adapter.submitList(it.data)
@@ -120,14 +119,23 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
 
     override fun onQueryTextSubmit(query: String?): Boolean {
         query?.let {
-            searchHadith(it)
+            if (it.isEmpty()) {
+                hadithsViewModel.getHadiths()
+
+            } else {
+                searchHadith(it)
+            }
         }
         return true
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
         newText?.let {
-            searchHadith(it)
+            if (it.isEmpty()) {
+                hadithsViewModel.getHadiths()
+            } else {
+                searchHadith(it)
+            }
         }
         return true
     }

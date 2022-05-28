@@ -3,21 +3,15 @@ package uz.h1001.hadith.data.repository
 import android.util.Log
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.launch
 import uz.h1001.hadith.core.Constants
-import uz.h1001.hadith.core.SingleMapper
 import uz.h1001.hadith.data.database.HadithDatabase
 import uz.h1001.hadith.data.database.entitiy.HadithModelDatabase
-import uz.h1001.hadith.data.database.mapper.HadithMapper
 import uz.h1001.hadith.domain.model.Hadith
 import uz.h1001.hadith.domain.model.Response
 import uz.h1001.hadith.domain.repositoy.HadithRepository
-import uz.h1001.hadith.domain.use_case.HadithDataStore
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -45,14 +39,9 @@ class HadithRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun searchHadithsFromDatabase(query: String): Flow<Response<List<Hadith>>> =
-        callbackFlow {
-            Log.d(Constants.TAG, "searchHadithsFromFireStore: $query ")
-            Response.Success(database.hadithDao().searchHadithFromDatabase(query = query).map { mapDatabaseModelToUIModel(value = it) })
-            awaitClose {
-                database.close()
-            }
-        }
+    override suspend fun searchHadithsFromDatabase(query: String): Response<List<Hadith>>{
+        return Response.Success(database.hadithDao().searchHadithFromDatabase(query = "%$query%").map { mapDatabaseModelToUIModel(value = it) })
+    }
 
     override fun getDatabaseVersionFromRemoteConfig(): Long {
         return remoteConfig.getLong(Constants.REMOTE_CONFIG_DATABASE_VERSION)

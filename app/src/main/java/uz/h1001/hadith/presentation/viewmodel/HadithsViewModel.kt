@@ -43,7 +43,7 @@ class HadithsViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             Log.d(Constants.TAG, "getHadiths: database version remote config ${useCases.getDatabaseVersion()}")
             Log.d(Constants.TAG, "getHadiths: database version local ${dataStore.getLocalDatabaseVersion()}")
-            if (useCases.getDatabaseVersion() != dataStore.getLocalDatabaseVersion()) {
+            if (useCases.getDatabaseVersion() != dataStore.getLocalDatabaseVersion() || useCases.getDatabaseVersion() == 0L) {
                 useCases.getHadiths.invoke().collect { response ->
                     when (response) {
                         is Response.Success -> {
@@ -74,9 +74,7 @@ class HadithsViewModel @Inject constructor(
 
     fun searchHadiths(query: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            useCases.searchHadiths.invoke(query = query).collect { response ->
-                _searchHadithsLiveData.postValue(response)
-            }
+            _searchHadithsLiveData.postValue(useCases.searchHadiths(query = query))
         }
     }
 

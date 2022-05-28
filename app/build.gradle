@@ -5,6 +5,7 @@ plugins {
     id("com.google.gms.google-services")
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id 'com.onesignal.androidsdk.onesignal-gradle-plugin'
 }
 
 android {
@@ -72,9 +73,15 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences:1.0.0")
 
     //Room Database
-    def room_version = "2.4.1"
+    def room_version = "2.3.0"
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
+
+    //ADMOB
+    implementation 'com.google.android.gms:play-services-ads:20.6.0'
+    implementation platform('com.google.firebase:firebase-bom:29.2.1')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.onesignal:OneSignal:[4.0.0, 4.99.99]'
 
 }

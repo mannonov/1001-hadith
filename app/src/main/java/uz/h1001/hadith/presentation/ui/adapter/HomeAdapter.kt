@@ -25,7 +25,7 @@ class HomeAdapter() : ListAdapter<Hadith, HomeAdapter.ViewHolder>(ItemComparator
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Hadith) {
             binding.apply {
-                tvChapterNumber.text = "${item.number} - hadis"
+                tvChapterNumber.text = item.number
                 tvChapterTitle.text = item.title
             }
             binding.root.setOnClickListener {

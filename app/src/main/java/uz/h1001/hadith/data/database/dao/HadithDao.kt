@@ -16,7 +16,8 @@ interface HadithDao {
     @Query("SELECT * FROM hadith_table")
     suspend fun getHadiths(): List<HadithModelDatabase>
 
-    @Query("SELECT * FROM hadith_table WHERE number LIKE :query OR title LIKE :query")
+    @Query("SELECT * FROM hadith_table WHERE title LIKE :query " +
+            "OR number LIKE :query")
     suspend fun searchHadithFromDatabase(query: String): List<HadithModelDatabase>
 
 }

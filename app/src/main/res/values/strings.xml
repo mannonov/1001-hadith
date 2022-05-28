@@ -11,4 +11,17 @@
     <string name="menu_share">Ulashish</string>
     <string name="navigation_drawer_open">Open</string>
     <string name="navigation_drawer_close">Close</string>
+    <string name="back">Back</string>
+    <string name="one_signal_id"></string>
+
+    <!--Production-->
+<!--        <string name="admob_id"></string>-->
+<!--        <string name="admob_inter"></string>-->
+<!--        <string name="BANNER_ID"></string>-->
+
+    <!--Test-->
+    <string name="admob_id">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="admob_inter">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="BANNER_ID">ca-app-pub-3940256099942544/6300978111</string>
+
 </resources>
